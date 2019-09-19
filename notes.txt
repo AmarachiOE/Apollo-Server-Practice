@@ -2,3 +2,9 @@
 $ npm init --yes
 $ npm install apollo-server graphql
 $ touch index.js
+
+
+Resolver:
+We've defined our data set, but Apollo Server doesn't know that it should use that data set when it's executing a query. To fix this, we create a resolver.
+
+Resolvers tell Apollo Server how to fetch the data associated with a particular type. Because our Book array is hardcoded, the corresponding resolver is straightforward.
