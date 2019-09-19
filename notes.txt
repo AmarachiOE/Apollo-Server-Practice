@@ -1,16 +1,36 @@
+From website: https://www.apollographql.com/docs/apollo-server/getting-started/
 
+Initialize Project
+- new repo with readme on github
+$ git clone <url>
+$ cd <folder>
 $ npm init --yes
 $ npm install apollo-server graphql
 $ touch index.js
 
+1. Install dependencies
 
-Resolver:
-We've defined our data set, but Apollo Server doesn't know that it should use that data set when it's executing a query. To fix this, we create a resolver.
+2. Define schema
 
-Resolvers tell Apollo Server how to fetch the data associated with a particular type. Because our Book array is hardcoded, the corresponding resolver is straightforward.
+3. Define data set
+
+4. Resolver:
+    - We've defined our data set, but Apollo Server doesn't know that it should use that data set when it's executing a query. To fix this, we create a resolver.
+
+    - Resolvers tell Apollo Server how to fetch the data associated with a particular type. Because our Book array is hardcoded, the corresponding resolver is straightforward.
 
 
-Create Instance of Apollo Server:
-We've defined our schema, data set, and resolver. Now we just need to provide this information to Apollo Server when we initialize it.
+5. Create Instance of Apollo Server:
+    - We've defined our schema, data set, and resolver. Now we just need to provide this information to Apollo Server when we initialize it.
 
-Then run in command line $ node index.js
+    - Then run in command line $ node index.js
+
+6. Test Queries:
+    - Go to http://localhost:4000/
+    - Test this query:
+        {
+            books {
+                title
+                author
+            }
+        }
