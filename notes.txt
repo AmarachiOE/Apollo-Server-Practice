@@ -8,3 +8,9 @@ Resolver:
 We've defined our data set, but Apollo Server doesn't know that it should use that data set when it's executing a query. To fix this, we create a resolver.
 
 Resolvers tell Apollo Server how to fetch the data associated with a particular type. Because our Book array is hardcoded, the corresponding resolver is straightforward.
+
+
+Create Instance of Apollo Server:
+We've defined our schema, data set, and resolver. Now we just need to provide this information to Apollo Server when we initialize it.
+
+Then run in command line $ node index.js
