@@ -79,6 +79,8 @@ Object Types:
         type CustomType {
             circular: TypeName
         }
+        
+Root Operation Types: Query, Mutation, Subscription
 
 Query Type:
     - A GraphQL query is for fetching data and compares to the GET verb in REST-based APIs
@@ -90,6 +92,10 @@ Query Type:
         getBooks: [Book]
         getAuthors: [Author]
     }
+
+    - [Book!]!:
+        - The inner exclamation mark says that each entry in the array must be a Book — it cannot be Null.
+        - The outer exclamation mark says that the array itself cannot be Null — at a minimum, it should be an empty array.
 
     - Those familiar with REST-based APIs would normally find these located on separate GET end-points (e.g. /api/books and /api/authors), but GraphQL allows them to be queried at the same time and returned at once.
 
