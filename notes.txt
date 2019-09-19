@@ -1,3 +1,5 @@
+::::::::::::::::::::: SET-UP :::::::::::::::::::::
+
 From website: https://www.apollographql.com/docs/apollo-server/getting-started/
 
 Initialize Project
@@ -34,3 +36,79 @@ $ touch index.js
                 author
             }
         }
+
+
+SDL: Schema Definition Language:
+    - GraphQL implements a human-readable schema syntax known as its Schema Definition Language, or "SDL". The SDL is used to express the types available within a schema and how those types relate to each other (describes SHAPE and RELATIONSHIP of data to return).
+
+    - At first glance the SDL may appear to be similar to JavaScript, but this GraphQL-specific syntax must be stored as a String.
+
+    - Examples:
+
+    type Book {
+    title: String
+    author: Author
+    }
+
+    type Author {
+    name: String
+    books: [Book]
+    }
+
+::::::::::::::::::::: TYPES :::::::::::::::::::::
+
+Scalar Types:
+    - Scalar types represent the leaves of an operation and always resolve to concrete data. The default scalar types which GraphQL offers are:
+    - Int
+    - Float
+    - String
+    - Boolean
+    - ID (serialized as String)
+
+Object Types:
+    - The object type is the most common type used in a schema and represents a group of fields. 
+    - Each field inside of an object type maps to another type, allowing nested types and circular references.
+    - Example:
+        type TypeName {
+            fieldA: String
+            fieldB: Boolean
+            fieldC: Int
+            fieldD: CustomType
+        }
+
+        type CustomType {
+            circular: TypeName
+        }
+
+Query Type:
+    - A GraphQL query is for fetching data and compares to the GET verb in REST-based APIs
+    - In example Query type, we define two types of queries which are available on this GraphQL server:
+        - getBooks: which returns a list of Book objects.
+        - getAuthors: which returns a list of Author objects.
+
+    type Query {
+        getBooks: [Book]
+        getAuthors: [Author]
+    }
+
+    - Those familiar with REST-based APIs would normally find these located on separate GET end-points (e.g. /api/books and /api/authors), but GraphQL allows them to be queried at the same time and returned at once.
+
+    - Example client query:
+    query {
+        getBooks {
+            title
+        }
+
+        getAuthors {
+            name
+        }
+    }
+    - returns 2 separate lists. But if wanted 1 list of books with their authors in same list:
+    query {
+        getBooks {
+            title
+            author {
+                name
+            }
+        }
+    }
