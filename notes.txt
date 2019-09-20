@@ -55,7 +55,7 @@ SDL: Schema Definition Language:
     books: [Book]
     }
 
-::::::::::::::::::::: TYPES :::::::::::::::::::::
+::::::::::::::::::::: SDL TYPES :::::::::::::::::::::
 
 Scalar Types:
     - Scalar types represent the leaves of an operation and always resolve to concrete data. The default scalar types which GraphQL offers are:
@@ -79,7 +79,7 @@ Object Types:
         type CustomType {
             circular: TypeName
         }
-        
+
 Root Operation Types: Query, Mutation, Subscription
 
 Query Type:
@@ -118,3 +118,23 @@ Query Type:
             }
         }
     }
+
+Mutation Type:
+    - operations sent to server to create, update, delete data (post, put, delete)
+    - specifies the entry points for data manipulation operations
+    - Multiple mutations may be sent in the same request, however they will be executed in the order they are provided (in series), in order to avoid race-conditions within the operation.
+    - Ex: Mutation type for adding a book:
+        type Mutation {
+            addBook(title: String, author: String): Book
+        }
+
+    - Ex: mutation request on client: 
+    - (add new book, then return title and author)
+        mutation {
+            addBook(title: "Fox in Socks", author: "Dr. Seuss") {
+                title
+                author {
+                    name
+                }
+            }
+        }

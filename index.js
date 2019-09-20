@@ -24,7 +24,8 @@ const typeDefs = gql`
   }
 `;
 
-// Define your dataset (can come from a database, a REST API, a static object storage service, or even another GraphQL server)
+// Define your dataset 
+// Can come from a database, a REST API, hard-coded, a static object storage service, or even another GraphQL server
 
 const books = [
     {
