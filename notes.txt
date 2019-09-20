@@ -190,3 +190,27 @@ Designing Queries for Client Needs
         temperature: Float
         description: String
     }
+
+
+Designing Mutations:
+    - Mutation type is designed with the expectation that there will be a response object, so that client won't have to re-query
+    - Ex: updating User's age:
+
+    type Mutation {
+        updateUserAge(id: ID!, age: Int!): User
+    }
+
+    type User {
+        id: ID!
+        name: String!
+        age: Int!
+    }
+
+    - Ex client request:
+    mutation updateMyUser {
+        updateUserAge(id: 1, age: 25){
+            id
+            age
+            name
+        }
+    }
