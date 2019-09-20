@@ -11,7 +11,9 @@ const typeDefs = gql`
   # This "Book" type defines the queryable fields for every book in our data source.
 
   type Book {
+    "Title of the book"
     title: String
+    "Person who wrote the book"
     author: String
   }
 
@@ -21,6 +23,12 @@ const typeDefs = gql`
 
   type Query {
     books: [Book]
+  }
+
+  # Mutation Type:
+
+  type Mutation {
+      addBook(title: String, author: String): Book
   }
 `;
 

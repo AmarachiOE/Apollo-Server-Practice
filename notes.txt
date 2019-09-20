@@ -138,3 +138,55 @@ Mutation Type:
                 }
             }
         }
+
+
+Descriptions:
+    - can use "blah blah" or """ blaahhh """ for single- or multi-line descriptions of types of fields
+
+General Conventions:
+    - Fields --> camelCase      (similar variable names)
+    - Types --> PascalCase      (similar class names)
+    - Enums --> 
+                Type name: PascalCase (Weekdays)
+                Variable name: ALL_CAPS (MONDAY, TUESDAY...) (similar to constants) 
+    
+
+Designing Queries for Client Needs
+    - For example, let's say you want to create a view that lists some events, their locations, and the weather at that location. In that case, you might want to do a query like this:
+
+    query EventList {
+        upcomingEvents {
+            name
+            date
+            location {
+                name
+                weather {
+                    temperature
+                    description
+                }
+            }
+        }
+    }
+
+    - The desire to display this data could inform the design of a schema like the following:
+
+    type Query {
+        upcomingEvents: [Event]
+        # Other fields, etc
+    }
+
+    type Event {
+        name: String
+        date: String
+        location: Location
+    }
+
+    type Location {
+        name: String
+        weather: WeatherInfo
+    }
+
+    type WeatherInfo {
+        temperature: Float
+        description: String
+    }
