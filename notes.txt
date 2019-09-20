@@ -214,3 +214,71 @@ Designing Mutations:
             name
         }
     }
+
+
+Mutation Responses:
+    - return updated fields in a mutation
+    - always returns  or "throw" errors if occur during a mutation
+    - or make sure to return which fields failed to update and which fields successfully updated (transactional information)
+    - Suggestion: implement a MutationResponse interface to be implemented on every mutation response (enables transactional info to be returned to normal mutation response)
+
+    - Example 1:
+    interface MutationResponse {
+        code: String!
+        success: Boolean!
+        message: String!
+    }
+
+    type UpdateUserMutationResponse implements MutationResponse {
+        code: String!
+        success: Boolean!
+        message: String!
+        user: User
+    }
+
+    - Calling a mutation that returns that  UpdateUserMutationResponse type would result in a response that looks something like this:
+
+    {
+        "data": {
+            "updateUser": {
+                "code": "200",
+                "success": true,
+                "message": "User was successfully updated",
+                "user": {
+                    "id": "1",
+                    "name": "Jane Doe",
+                    "age": 35
+                }
+            }
+        }
+    }
+
+    - Example 2: likePost type, which could affect a user's "reputation" and also update the post itself, might implement MutationResponse in the following manner:
+
+    type LikePostMutationResponse implements MutationResponse {
+        code: String!
+        success: Boolean!
+        message: String!
+        post: Post
+        user: User
+    }
+
+    - we've provided the expectation that both the user and the post would be returned and an actual response to a likePost mutation could be:
+
+    {
+        "data": {
+            "likePost": {
+                "code": "200",
+                "success": true,
+                "message": "Thanks!",
+                "post": {
+                    "likes": 5040
+                },
+                "user": {
+                    "reputation": 11
+                }
+            }
+        }
+    }
+
+
