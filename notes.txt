@@ -281,4 +281,34 @@ Mutation Responses:
         }
     }
 
+Using and Passing in Input types:
+    - Instead of passing in info when creatingPost like this:
+
+    type Mutation {
+        createPost(title: String, body: String, mediaUrls: [String]): Post
+    }
+
+    - Use an Input type like so:
+    type Mutation {
+        createPost(post: PostAndMediaInput): Post
+    }
+
+    input PostAndMediaInput {
+        title: String
+        body: String
+        mediaUrls: [String]
+    }
+
+    - Can also use descriptions in an Input type:
+
+    input PostAndMediaInput {
+        "A main title for the post"
+        title: String
+        "The textual body of the post."
+        body: String
+        "A list of URLs to render in the post."
+        mediaUrls: [String]
+    }
+
+    - Though possible to reuse an input type bw a query and mutation which target the same resource, it's best to avoid this since in many cases certain null fields might be tolerated for one but not the other
 
