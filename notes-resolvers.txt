@@ -1,0 +1,43 @@
+https://www.apollographql.com/docs/apollo-server/data/data/
+
+Fetching Data with Resolvers
+    - In order to respond to queries, a schema needs to have resolve functions for all fields called the "resolver map"
+    - resolver map relates the schema fields and types to a function
+
+
+Example Resolver Map:
+    const { gql } = require('apollo-server');
+    const { find, filter } = require('lodash');
+
+    const schema = gql`
+        type Book {
+            title: String
+            author: Author
+        }
+
+        type Author {
+            books: [Book]
+        }
+
+        type Query {
+            author: Author
+        }
+    `;
+
+    # ########  RESOLVER MAP (note: relations between types... Query -- Author -- Book)
+
+    const resolvers = {
+        Query: {
+            author(parent, args, context, info) {
+            return find(authors, { id: args.id });
+            },
+        },
+
+        Author: {
+            books(author) {
+            return filter(books, { author: author.name });
+            },
+        },
+    };
+
+    - 

@@ -311,4 +311,3 @@ Using and Passing in Input types:
     }
 
     - Though possible to reuse an input type bw a query and mutation which target the same resource, it's best to avoid this since in many cases certain null fields might be tolerated for one but not the other
-
