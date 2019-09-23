@@ -74,3 +74,28 @@ Resolver Results:
     - Promise: resolvers often do async actions like fetching from a DB or BE API, so they can return promises. Can be combined with arrays, so a resolver can return a promise that resolves to an array or array of promises, and both are handled correctly
 
     - Scalar or Object value: resolver can also return any other kind of value, which doesn't have any special meaning but is simply passed down into any nested resolvers
+
+
+Parent Argument:
+    - the 1st arg in every resolver, parent, can be a 
+
+    query {
+        getAuthor(id: 5){
+            name
+            posts {
+                title
+                author {
+                    name # this will be the same as the name above
+                }
+            }
+        }
+    }
+
+    - Every GraphQL query is a tree of function calls in the server. So the parent contains the result of parent resolver, in this case:
+
+    1. parent in Query.getAuthor will be whatever the server configuration passed for rootValue
+    2. parent in Author.name and Author.posts will be the result from getAuthor, likely an Author object from the backend
+    3. parent in Post.title and Post.author will be one item from the posts result array
+    4. parent in Author.name is the result from the above Post.author call
+
+    
