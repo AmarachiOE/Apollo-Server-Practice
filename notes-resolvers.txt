@@ -152,4 +152,24 @@ Default Resolvers:
         books: [Book]
     }
 
-    
+
+Modularizing Resolvers:  https://www.apollographql.com/docs/apollo-server/data/data/#modularizing-resolvers
+
+    - Can accomplish modularity with resolvers by passing around multiple resolver objects and combining them together with Lodash's merge or other equivalent:
+
+    // comment.js
+    const resolvers = {
+        Comment: { ... }
+    }
+
+    export resolvers;
+
+    // post.js
+    const { merge } = require('lodash');
+
+    const Comment = require('./comment');
+    const resolvers = merge({
+        Post: { ... }
+    }, Comment.resolvers);
+
+    export resolvers;
