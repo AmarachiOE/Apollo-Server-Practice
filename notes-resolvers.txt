@@ -98,4 +98,37 @@ Parent Argument:
     3. parent in Post.title and Post.author will be one item from the posts result array
     4. parent in Author.name is the result from the above Post.author call
 
-    
+
+Context Argument (3rd arg):
+    - It is useful for passing things that any resolver may need, like authentication scope, DB connections, custom fetch functions
+
+    - Additionally, if you're using dataloaders to batch requests across resolvers, you cna attach them to context as well
+
+    - Should be the same for all resolvers, and resolvers should never modify it (ensuring consistency across resolvers and helps increase dvlpmt velocity)
+
+    - To provide a context to your resolver, add a context object to the Apollo Server constructor. The constructor gets called with every request, so you can set the context based off the details of the req (like HTTP headers)
+
+    const server = new ApolloServer({
+        typeDefs,
+        resolvers,
+        context: ({ req }) => ({
+            authScope: getScope(req.headers.authorization)
+        })
+    }));
+
+    // resolver
+    (parent, _, context) => {
+        if(context.authScope !== ADMIN) throw AuthenticationError('not admin');
+        ...
+    }
+
+    - Context can also be created async, allowing DB connections and other ops to complete
+
+    context: async () => ({
+        db: await client.connect(),
+    })
+
+    // resolver
+    (parent, _, context) => {
+        return context.db.query('SELECT * FROM table_name');
+    }
