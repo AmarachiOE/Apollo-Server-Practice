@@ -132,3 +132,24 @@ Context Argument (3rd arg):
     (parent, _, context) => {
         return context.db.query('SELECT * FROM table_name');
     }
+
+
+Default Resolvers:
+
+    - Explicit resolvers are not needed for every type, since Apollo Server provides a default that can perform 2 actions depending on the contents of parent:
+
+    1. Return the property from parent with the relevant field name 
+
+    2. Calls a func on parent with the relevant field name and provide the remaining resolver parameters as args
+
+    - For the following schema, the title field of Book would not need a resolver if the result of the books resolver provided a list of objects that already contained a title field:
+
+    type Book {
+        title: String
+    }
+
+    type Author {
+        books: [Book]
+    }
+
+    
