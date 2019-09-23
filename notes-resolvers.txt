@@ -173,3 +173,31 @@ Modularizing Resolvers:  https://www.apollographql.com/docs/apollo-server/data/d
     }, Comment.resolvers);
 
     export resolvers;
+
+
+Sending Queries:
+
+  NAMING OPERATIONS:
+    - Name queries or mutations when sending client requests by placing an identifier after the query or mutation keyword:
+
+    query HomeBookListing {
+        getBooks {
+            title
+        }
+    }
+
+  QUERIES WITH VARIABLES
+    - By defining a map of variables on the root query or mutation operation, which are sent from the client, variables can be used (and re-used) within the types and fields themselves.
+
+    mutation HomeQuickAddBook($title: String, $author: String = "Anonymous") {
+        addBook(title: $title, author: $author) {
+            title
+        }
+    }
+
+    - GraphQL clients, like Apollo Client, take care of sending the variables to the server separate from the operation itself:
+
+    {
+        "query": "...",
+        "variables": { "title": "Green Eggs and Ham", "author": "Dr. Seuss" }
+    }
