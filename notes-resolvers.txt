@@ -62,3 +62,15 @@ Resolver Parameters Naming and Description:
     - context: an object shared by all resolvers in a particular query, and is used to contain per-request state, including authentication info, dataloader instances, and anything else that should be taken into account when resolving the query (like the headers!)
 
     - info: contains info about the execution state of the query, including the field name, path to the field from the root, and more.
+
+
+Resolver Results:
+    - Resolvers can return diff kinds of results which are treated differently:
+
+    - Null or Undefined: object can not be found
+
+    - Array: only valid of schema indicates that result of a field should be a list
+
+    - Promise: resolvers often do async actions like fetching from a DB or BE API, so they can return promises. Can be combined with arrays, so a resolver can return a promise that resolves to an array or array of promises, and both are handled correctly
+
+    - Scalar or Object value: resolver can also return any other kind of value, which doesn't have any special meaning but is simply passed down into any nested resolvers
