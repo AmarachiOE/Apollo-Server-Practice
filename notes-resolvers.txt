@@ -3,6 +3,8 @@ https://www.apollographql.com/docs/apollo-server/data/data/
 Fetching Data with Resolvers
     - In order to respond to queries, a schema needs to have resolve functions for all fields called the "resolver map"
     - resolver map relates the schema fields and types to a function
+    - Resolvers can separated into distinct objects --> modularizing resolvers
+    - In addition to returning GQL scalars, you can return custom scalars for special use cases such as JSON or big integers
 
 
 Example Resolver Map:
@@ -40,4 +42,23 @@ Example Resolver Map:
         },
     };
 
-    - 
+    - Explanation:
+    - For the above map, the query, {  author  {  books  }  }, will call the Query.author resolver first and pass its results to Author.books
+    - The query result will contain the return value of Author.books nested under data.author.books
+
+Resolver Type Signature:
+    - aside from parent resolvers' value, resolvers receive a few more args
+    - the full resolver func signature contains 4 positional args:
+      (parent, args, context, info) and can return an object or Promise
+    - once a Promise resolves, the children resolvers will continue executing (useful for fetching data from BE)
+
+Resolver Parameters Naming and Description:
+    - parent: the object that contains the result returned from the resolver on the parent field, or, in the case of a top-level Query field, the rootValue passed from the server configuration.
+
+    - args: an object with the args passed into the field in the query: 
+    query{ key(arg: "you meant") }, 
+    the args object would be: { "arg": "you meant" }
+
+    - context: an object shared by all resolvers in a particular query, and is used to contain per-request state, including authentication info, dataloader instances, and anything else that should be taken into account when resolving the query (like the headers!)
+
+    - info: contains info about the execution state of the query, including the field name, path to the field from the root, and more.
